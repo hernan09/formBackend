@@ -59,7 +59,16 @@ app.get('/view',(req,res)=>{
     if(err) res.status(500).send(err)
     if(!usuario)res.status(404).json({mesage:'not found'})
 
-    res.status(200).json(usuarios)
+    res.status(200).send(usuarios)
    
+  })
+})
+
+app.delete('/delete',(req,res)=>{
+  let id=Number
+  usuario.findOneAndDelete(id,(err,userDelete)=>{
+    if (err) res.status(500).send(err)
+    if (!usuario) res.status(404).json({ mesage: 'not delete' })
+    res.status(200).send(userDelete)
   })
 })
