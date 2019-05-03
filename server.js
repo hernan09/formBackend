@@ -12,7 +12,7 @@ const app=expres()
 const port=process.env.PORT || 4000
 
 app.use((req, res, next) => {
-
+  
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
@@ -25,6 +25,8 @@ app.use(expres.static(path.join(__dirname,'public')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(morgan('dev'))
+
+
 mongose.connect('mongodb://localhost:27017/usuarios', { useNewUrlParser: true },(err)=>{
   if(err) console.log(err)
 
@@ -65,7 +67,7 @@ app.get('/view',(req,res)=>{
 })
 
 app.delete('/delete',(req,res)=>{
-  let id=Number
+  let id=req.params.id
   usuario.findOneAndDelete(id,(err,userDelete)=>{
     if (err) res.status(500).send(err)
     if (!usuario) res.status(404).json({ mesage: 'not delete' })
